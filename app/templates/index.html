@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 50px;
+            color: #333;
+        }
+        #container {
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: none;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+        .sentiment {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .positive { color: green; }
+        .neutral { color: #333; }
+        .negative { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Sentiment Analysis</h1>
+    <div id="container">
+        <textarea id="review" rows="4" placeholder="Enter your review"></textarea>
+        <button onclick="predictSentiment()">Analyze Sentiment</button>
+        <div id="result" class="sentiment"></div>
+        <div id="error" class="error"></div>
+    </div>
+
+    <script>
+        function predictSentiment() {
+            const reviewText = document.getElementById('review').value;
+            const resultDiv = document.getElementById('result');
+            const errorDiv = document.getElementById('error');
+
+            if (!reviewText.trim()) {
+                errorDiv.textContent = "Please enter a review.";
+                resultDiv.innerHTML = "";
+                return;
+            }
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ review: reviewText })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                errorDiv.textContent = "";
+                resultDiv.innerHTML = `<p class="sentiment">Sentiment: <span class="${data.sentiment.toLowerCase()}">${data.sentiment}</span></p>`;
+            })
+            .catch(error => {
+                errorDiv.textContent = "An error occurred while analyzing sentiment.";
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
