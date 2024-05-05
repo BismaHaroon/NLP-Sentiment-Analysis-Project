@@ -4,8 +4,8 @@ import joblib
 
 app = Flask(__name__)
 
-model = joblib.load('../models/best_sentiment_analysis_model.pkl')
-vectorizer = joblib.load('../models/best_tfidf_vectorizer.pkl')
+model = joblib.load('models/best_sentiment_analysis_model.pkl')
+vectorizer = joblib.load('models/best_tfidf_vectorizer.pkl')
 
 
 @app.route('/')
