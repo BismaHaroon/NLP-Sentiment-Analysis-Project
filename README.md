@@ -1,6 +1,12 @@
 # NLP-Sentiment-Analysis-Project
 This repository contains code and resources for a sentiment analysis project, including data preprocessing, model training, aspect-based sentiment analysis, and a Flask web application for deploying the sentiment analysis model.
 
+
+https://github.com/BismaHaroon/NLP-Sentiment-Analysis-Project/assets/125575282/0cedbc3f-136b-46f4-987f-12dc70cbe721
+
+
+
+
 ### Directory Structure
 
 - **data/**: Contains the dataset used for sentiment analysis.
